@@ -1,0 +1,57 @@
+BluetoothSerial SerialBT;
+long num1;
+long num2;
+long result;
+char sign;
+void setup() {
+  Serial.begin(115200);
+  SerialBT.begin("ESP32test"); //Bluetooth device name
+  Serial.println("The device started, now you can pair it with bluetooth!");
+  delay(11200);
+  
+  Serial.println("send me calculation");
+  
+}
+
+
+void loop() {
+  
+  
+  while (SerialBT.available()>0) {
+    num1=SerialBT.parseInt();
+    sign=SerialBT.read();
+    num2=SerialBT.parseInt();
+    Serial.write(SerialBT.read());
+    calculation();
+    Serial.println(result);
+    Serial.println();
+    
+  }
+ 
+  
+
+}
+
+void calculation()
+{
+  switch (sign){
+
+  case '+':
+  result=num1+num2;
+  break;
+  case '-':
+  result=num1-num2;
+  break;
+  case '*':
+  result=num1*num2;
+  break;
+  case '/':
+  result=num1/num2;
+  break;
+  default:
+  Serial.println("invalid choice");
+  Serial.println();
+  result=0;
+  }
+
+}
